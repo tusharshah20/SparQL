@@ -1,0 +1,11 @@
+# filename: ex116.rq
+
+prefix e: <http://learningsparql.com/ns/expenses#>
+
+SELECT ?mealName
+WHERE
+{ ?s e:description ?mealName . }
+OFFSET 2
+LIMIT 3
+
+

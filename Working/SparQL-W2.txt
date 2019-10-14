@@ -1,0 +1,561 @@
+SparQL
+----------
+Resource description format (RDF) : Its a data model. Can be represented in different formats (such as turtle format)
+Everything can be described as triple.
+Subject(resource identifier): resource we are trying to describe
+Predicate(property name) : property of that resource
+Object (property value) : value of that property.
+
+refer: ex002.ttl (dataset)
+subject and predict must have an URI [uniform resource identifier] ( or URL which is also a type of URI)
+@prefix ---defines a short form of URI
+refer: ex003.rq (query)
+==========================
+Running Query using ARQ (ARQ [query engine]A sparql processor for Jena)
+
+Example1:
+C:\apache-jena-3.13.0\bat>arq.bat --data C:\SparkQL\ex002.ttl --query C:\SparkQL\ex003.rq
+output: 
+---------------------------------
+| craigEmail                    |
+=================================
+| "c.ellis@usairwaysgroups.com" |
+| "craigellis@yahoo.com"        |
+---------------------------------
+
+Example2:
+C:\apache-jena-3.13.0\bat>arq.bat --data C:\SparkQL\ex002.ttl --query C:\SparkQL\ex004.rq
+----------------------
+| cindyEmail         |
+======================
+| "cindym@gmail.com" |
+----------------------
+
+============================
+Using fuseki Server
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --help
+fuseki [--config=FILE] [--mem|--desc=AssemblerFile|--file=FILE] [--port PORT] /DatasetPathName
+  Fuseki
+      --desc=                Assembler description file
+      --mem                  Create an in-memory, non-persistent dataset for the server
+      --file=FILE            Create an in-memory, non-persistent dataset for the server, initialised with the contents of the file
+      --tdb2                 Use TDB2 for command line persistent datasets (default is TDB1)
+      --loc=DIR              Use an existing TDB database (or create if does not exist)
+      --memTDB               Create an in-memory, non-persistent dataset using TDB (testing only)
+      --port                 Listen on this port number
+      --localhost            Listen only on the localhost interface
+      --timeout=             Global timeout applied to queries (value in ms) -- format is X[,Y]
+      --update               Allow updates (via SPARQL Update and SPARQL HTTP Update)
+      --config=              Use a configuration file to determine the services
+      --jetty-config=FILE    Set up the server (not services) with a Jetty XML file
+      --gzip=on|off          Enable GZip compression (HTTP Accept-Encoding) if request header set
+  Symbol definition
+      --set                  Set a configuration symbol to a value
+  General
+      -v   --verbose         Verbose
+      -q   --quiet           Run with minimal output
+      --debug                Output information for debugging
+      --help
+      --version              Version information
+      --strict               Operate in strict SPARQL mode (no extensions of any kind)
+
+Starting server
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --update --mem /:ds
+[2019-10-13 08:42:26] Server     INFO  Dataset: in-memory
+[2019-10-13 08:42:26] Server     INFO  Apache Jena Fuseki 3.13.0
+[2019-10-13 08:42:27] Config     INFO  FUSEKI_HOME=C:\apache-jena-fuseki-3.13.0\.
+[2019-10-13 08:42:27] Config     INFO  FUSEKI_BASE=C:\apache-jena-fuseki-3.13.0\run
+[2019-10-13 08:42:27] Config     INFO  Shiro file: file://C:\apache-jena-fuseki-3.13.0\run\shiro.ini
+[2019-10-13 08:42:29] Config     INFO  Template file: templates/config-mem
+[2019-10-13 08:42:29] Config     INFO  Register: /:ds
+[2019-10-13 08:42:29] Server     INFO  Started 2019/10/13 08:42:29 CEST on port 3030
+
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --update -v --mem /:ds
+[2019-10-13 08:43:33] Server     INFO  Dataset: in-memory
+[2019-10-13 08:43:33] Server     INFO  Apache Jena Fuseki 3.13.0
+[2019-10-13 08:43:33] Config     INFO  FUSEKI_HOME=C:\apache-jena-fuseki-3.13.0\.
+[2019-10-13 08:43:33] Config     INFO  FUSEKI_BASE=C:\apache-jena-fuseki-3.13.0\run
+[2019-10-13 08:43:33] Config     INFO  Shiro file: file://C:\apache-jena-fuseki-3.13.0\run\shiro.ini
+[2019-10-13 08:43:33] Config     INFO  Template file: templates/config-mem
+[2019-10-13 08:43:34] Config     INFO  Register: /:ds
+[2019-10-13 08:43:34] Server     INFO  Apache Jena Fuseki
+[2019-10-13 08:43:34] Server     INFO  Dataset Type = in-memory
+[2019-10-13 08:43:34] Server     INFO  Path = /:ds; Services = [data, quads, query, sparql, get, update, quads, upload]
+[2019-10-13 08:43:34] Server     INFO    Fuseki: 3.13.0
+[2019-10-13 08:43:34] Server     INFO    Java:   1.8.0_221
+[2019-10-13 08:43:34] Server     INFO    Memory: max=1.0 GiB
+[2019-10-13 08:43:34] Server     INFO    OS:     Windows 10 10.0 amd64
+[2019-10-13 08:43:34] Server     INFO  Started 2019/10/13 08:43:34 CEST on port 3030
+
+Access Browser: http://localhost:3030
+upload dataset (i.e. ttl file)> type/paste your query > choose format > run query
+
+================
+Example 3:
+ex012.ttl & ex008.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex012.ttl --query c:/sparql/sparqllearning/ex008.rq
+---------------------------------------------
+| person                                    |
+=============================================
+| <http://learningsparql.com/ns/data#i0432> |
+---------------------------------------------
+
+shows only id (URI for individual) which can be useful for machines but not for us.
+thus lets use ex017.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex012.ttl --query c:/sparql/sparqllearning/ex017.rq
+----------------------
+| first     | last   |
+======================
+| "Richard" | "Mutt" |
+----------------------
+
+we can also modify the query as in ex0172.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex012.ttl --query c:/sparql/sparqllearning/ex0172.rq
+------------------------------------------------
+| first     | last   | email                   |
+================================================
+| "Richard" | "Mutt" | "richard49@hotmail.com" |
+------------------------------------------------
+
+we can also modify the query as in ex0173.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex012.ttl --query c:/sparql/sparqllearning/ex0173.rq
+------------------------------------------------
+| first     | last   | email                   |
+================================================
+| "Richard" | "Mutt" | "richard49@hotmail.com" |
+------------------------------------------------
+===============
+Example 4:
+ex054.ttl & ex055.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex055.rq
+----------------------------------------
+| first   | last    | workTel          |
+========================================
+| "Craig" | "Ellis" | "(245) 315-5486" |
+----------------------------------------
+
+but using reserved keyword: OPTIONAL
+ex057.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex057.rq
+---------------------------------------------
+| first     | last       | workTel          |
+=============================================
+| "Craig"   | "Ellis"    | "(245) 315-5486" |
+| "Richard" | "Mutt"     |                  |
+| "Cindy"   | "Marshall" |                  |
+---------------------------------------------
+
+modifying query and using logical and
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex0572.rq
+----------------------------------------------------------------
+| first     | last       | workTel          | email            |
+================================================================
+| "Craig"   | "Ellis"    | "(245) 315-5486" | "(245) 315-5486" |
+| "Richard" | "Mutt"     |                  |                  |
+| "Cindy"   | "Marshall" |                  |                  |
+----------------------------------------------------------------
+
+refer: ex061.rq (using multi optionals)
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex061.rq
+------------------------------------------------------
+| first     | last       | workTel          | nick   |
+======================================================
+| "Craig"   | "Ellis"    | "(245) 315-5486" |        |
+| "Richard" | "Mutt"     |                  | "Rich" |
+| "Cindy"   | "Marshall" |                  |        |
+------------------------------------------------------
+
+Note** order of these optional statements can make a difference.
+=============================
+Example 5:
+ex067.rq (using NOT EXISTS)
+checking when property workTel doesnt exist in result set
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex067.rq
+--------------------------
+| first     | last       |
+==========================
+| "Richard" | "Mutt"     |
+| "Cindy"   | "Marshall" |
+--------------------------
+Note** craig was avoided in resultset
+
+ex065.rq( using filter and bound) ie 
+#if worknum has a value,bound will be true
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex065.rq
+--------------------------
+| first     | last       |
+==========================
+| "Richard" | "Mutt"     |
+| "Cindy"   | "Marshall" |
+--------------------------
+
+using MINUS
+ex068.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex054.ttl --query c:/sparql/sparqllearning/ex068.rq
+--------------------------
+| first     | last       |
+==========================
+| "Richard" | "Mutt"     |
+| "Cindy"   | "Marshall" |
+--------------------------
+===============================
+Example 6:
+Querying multiple datasets
+refer: ex072.ttl,ex073.ttl,ex368.ttl
+ex070.rq
+
+#we can join these datasets,we need to make sure prefixes are setup currently
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex072.ttl --data c:/sparql/sparqllearning/ex073.ttl 
+--data c:/sparql/sparqllearning/ex368.ttl --query c:/sparql/sparqllearning/ex070.rq
+-------------------------------------------------------------
+| last       | first     | courseName                       |
+=============================================================
+| "Ellis"    | "Craig"   | "Using SPARQL with non-RDF Data" |
+| "Mutt"     | "Richard" | "Using SPARQL with non-RDF Data" |
+| "Mutt"     | "Richard" | "Updating Data with SPARQL"      |
+| "Marshall" | "Cindy"   | "Modeling Data with OWL"         |
+| "Marshall" | "Cindy"   | "Using SPARQL with non-RDF Data" |
+-------------------------------------------------------------
+
+Now using Jena Fuseki Server
+Upload all files and test your query 
+========================
+Example 7:
+Refer: ex069.ttl ,ex094.rq
+
+using DISTINCT
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex069.ttl --query c:/sparql/sparqllearning/ex094.rq
+--------------------------
+| first     | last       |
+==========================
+| "Cindy"   | "Marshall" |
+| "Craig"   | "Ellis"    |
+| "Richard" | "Mutt"     |
+--------------------------
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex072.ttl --data c:/sparql/sparqllearning/ex073.ttl 
+--data c:/sparql/sparqllearning/ex368.ttl --query c:/sparql/sparqllearning/ex0942.rq
+-------------------
+| p               |
+===================
+| ab:email        |
+| ab:takingCourse |
+| ab:lastName     |
+| ab:firstName    |
+| ab:courseTitle  |
+| ab:courseTitle  |
+| ab:email        |
+| ab:takingCourse |
+| ab:takingCourse |
+| ab:lastName     |
+| ab:firstName    |
+| ab:email        |
+| ab:takingCourse |
+| ab:takingCourse |
+| ab:lastName     |
+| ab:firstName    |
+| ab:courseTitle  |
+| ab:courseTitle  |
+-------------------
+
+now check query with distinct..
+=============================
+Example 8:
+Combining results sets of 2 different graph patterns
+Using Union
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex072.ttl --data c:/sparql/sparqllearning/ex073.ttl --data c:/sparql/sparqllearning/ex368.ttl --query c:/sparql/sparqllearning/ex098.rq
+------------------------------------------------------------------------------------
+| person  | first     | last       | course     | courseName                       |
+====================================================================================
+| d:i8301 | "Craig"   | "Ellis"    |            |                                  |
+| d:i0432 | "Richard" | "Mutt"     |            |                                  |
+| d:i9771 | "Cindy"   | "Marshall" |            |                                  |
+|         |           |            | d:course71 | "Enhancing Websites with RDFa"   |
+|         |           |            | d:course59 | "Using SPARQL with non-RDF Data" |
+|         |           |            | d:course34 | "Modeling Data with OWL"         |
+|         |           |            | d:course85 | "Updating Data with SPARQL"      |
+------------------------------------------------------------------------------------
+
+Modifying query
+ex0702.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex072.ttl --data c:/sparql/sparqllearning/ex073.ttl 
+--data c:/sparql/sparqllearning/ex368.ttl --query c:/sparql/sparqllearning/ex0702.rq
+--------------------------
+| last       | first     |
+==========================
+| "Ellis"    | "Craig"   |
+| "Mutt"     | "Richard" |
+| "Marshall" | "Cindy"   |
+--------------------------
+
+Another example
+ref: ex100.ttl & ex101.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex100.ttl --query c:/sparql/sparqllearning/ex101.rq
+------------------------------------
+| first     | last    | instrument |
+====================================
+| "Craig"   | "Ellis" | "trumpet"  |
+| "Richard" | "Mutt"  | "clarinet" |
+| "Richard" | "Mutt"  | "sax"      |
+------------------------------------
+===========================================
+Example 9:
+refer: ex145.ttl & ex1163.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex1163.rq
+---------------
+| mealName    |
+===============
+| "breakfast" |
+| "breakfast" |
+---------------
+
+refer: ex145.ttl & ex1164.rq
+using offset with limit (to skip some results based on offset value)
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex1164.rq
+---------------
+| mealName    |
+===============
+| "breakfast" |
+| "dinner"    |
+| "dinner"    |
+---------------
+
+using no limit...
+refer: ex145.ttl & ex1162.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex1162.rq
+-------------------------------------------------------------------------------------------------------------------
+| s                                          | p                                                   | o            |
+===================================================================================================================
+| <http://learningsparql.com/ns/data#m40392> | <http://learningsparql.com/ns/expenses#amount>      | 6.53         |
+| <http://learningsparql.com/ns/data#m40392> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-14" |
+| <http://learningsparql.com/ns/data#m40392> | <http://learningsparql.com/ns/expenses#description> | "breakfast"  |
+| <http://learningsparql.com/ns/data#m40399> | <http://learningsparql.com/ns/expenses#amount>      | 10.00        |
+| <http://learningsparql.com/ns/data#m40399> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-16" |
+| <http://learningsparql.com/ns/data#m40399> | <http://learningsparql.com/ns/expenses#description> | "lunch"      |
+| <http://learningsparql.com/ns/data#m40394> | <http://learningsparql.com/ns/expenses#amount>      | 28.30        |
+| <http://learningsparql.com/ns/data#m40394> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-14" |
+| <http://learningsparql.com/ns/data#m40394> | <http://learningsparql.com/ns/expenses#description> | "dinner"     |
+| <http://learningsparql.com/ns/data#m40398> | <http://learningsparql.com/ns/expenses#amount>      | 6.65         |
+| <http://learningsparql.com/ns/data#m40398> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-16" |
+| <http://learningsparql.com/ns/data#m40398> | <http://learningsparql.com/ns/expenses#description> | "breakfast"  |
+| <http://learningsparql.com/ns/data#m40396> | <http://learningsparql.com/ns/expenses#amount>      | 9.45         |
+| <http://learningsparql.com/ns/data#m40396> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-15" |
+| <http://learningsparql.com/ns/data#m40396> | <http://learningsparql.com/ns/expenses#description> | "lunch"      |
+| <http://learningsparql.com/ns/data#m40397> | <http://learningsparql.com/ns/expenses#amount>      | 31.45        |
+| <http://learningsparql.com/ns/data#m40397> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-15" |
+| <http://learningsparql.com/ns/data#m40397> | <http://learningsparql.com/ns/expenses#description> | "dinner"     |
+| <http://learningsparql.com/ns/data#m40400> | <http://learningsparql.com/ns/expenses#amount>      | 25.05        |
+| <http://learningsparql.com/ns/data#m40400> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-16" |
+| <http://learningsparql.com/ns/data#m40400> | <http://learningsparql.com/ns/expenses#description> | "dinner"     |
+| <http://learningsparql.com/ns/data#m40395> | <http://learningsparql.com/ns/expenses#amount>      | 4.32         |
+| <http://learningsparql.com/ns/data#m40395> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-15" |
+| <http://learningsparql.com/ns/data#m40395> | <http://learningsparql.com/ns/expenses#description> | "breakfast"  |
+| <http://learningsparql.com/ns/data#m40393> | <http://learningsparql.com/ns/expenses#amount>      | 11.13        |
+| <http://learningsparql.com/ns/data#m40393> | <http://learningsparql.com/ns/expenses#date>        | "2011-10-14" |
+| <http://learningsparql.com/ns/data#m40393> | <http://learningsparql.com/ns/expenses#description> | "lunch"      |
+-------------------------------------------------------------------------------------------------------------------
+==============
+Example 10:
+Using sorting/ordering
+refer: ex145.ttl,ex146.rq,ex153.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex146.rq
+---------------------------------------
+| description | date         | amount |
+=======================================
+| "breakfast" | "2011-10-15" | 4.32   |
+| "breakfast" | "2011-10-14" | 6.53   |
+| "breakfast" | "2011-10-16" | 6.65   |
+| "lunch"     | "2011-10-15" | 9.45   |
+| "lunch"     | "2011-10-16" | 10.00  |
+| "lunch"     | "2011-10-14" | 11.13  |
+| "dinner"    | "2011-10-16" | 25.05  |
+| "dinner"    | "2011-10-14" | 28.30  |
+| "dinner"    | "2011-10-15" | 31.45  |
+---------------------------------------
+
+Note** or use ORDER BY DESC(?amount)
+              ORDER BY DESC(?date)
+              ORDER BY DESC(?description)
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex153.rq
+-------------
+| maxAmount |
+=============
+| 31.45     |
+-------------
+=============================
+Example 11:
+Counting number of triples in a dataset
+#modify ex146.rq and use
+
+select COUNT(*)
+where ...{?meal ?predicate ?object .}
+
+select (COUNT(*) as ?amountCount)
+where ...{?meal ?predicate ?object .}
+
+select COUNT(?amount)
+where ...{?meal ?predicate ?object .}
+==============================
+Example 12:
+USing sum/avg
+refer: ex145.ttl & ex1462.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex1462.rq
+-------------
+| amountSum |
+=============
+| 132.88    |
+-------------
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex1463.rq
+-------------------------------
+| amountAVG                   |
+===============================
+| 14.764444444444444444444444 |
+-------------------------------
+=================================
+Example 13:
+refer: ex069.ttl & ex137.rq
+(also refer: ex070.rq)
+Subquery feature of sparkql
+
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex069.ttl --query c:/sparql/sparqllearning/ex137.rq
+-------------------------------------------------
+| lastName   | courseName                       |
+=================================================
+| "Marshall" | "Enhancing Websites with RDFa"   |
+| "Marshall" | "Using SPARQL with non-RDF Data" |
+| "Marshall" | "Modeling Data with OWL"         |
+| "Marshall" | "Updating Data with SPARQL"      |
+| "Ellis"    | "Enhancing Websites with RDFa"   |
+| "Ellis"    | "Using SPARQL with non-RDF Data" |
+| "Ellis"    | "Modeling Data with OWL"         |
+| "Ellis"    | "Updating Data with SPARQL"      |
+| "Mutt"     | "Enhancing Websites with RDFa"   |
+| "Mutt"     | "Using SPARQL with non-RDF Data" |
+| "Mutt"     | "Modeling Data with OWL"         |
+| "Mutt"     | "Updating Data with SPARQL"      |
+-------------------------------------------------
+
+==========================================
+Example 14:
+refer: ex145.ttl
+& ex139.rq,ex141.rq,ex143.rq,ex144.rq
+
+ex139.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex139.rq
+-----------------------------------------
+| description | amount | tip   | total  |
+=========================================
+| "breakfast" | 6.53   | 1.306 | 7.836  |
+| "breakfast" | 6.65   | 1.33  | 7.98   |
+| "breakfast" | 4.32   | 0.864 | 5.184  |
+| "dinner"    | 28.30  | 5.66  | 33.96  |
+| "dinner"    | 31.45  | 6.29  | 37.74  |
+| "dinner"    | 25.05  | 5.01  | 30.06  |
+| "lunch"     | 10.00  | 2.0   | 12.0   |
+| "lunch"     | 9.45   | 1.89  | 11.34  |
+| "lunch"     | 11.13  | 2.226 | 13.356 |
+-----------------------------------------
+
+ex141.rq
+using string manipulation functions: (substr)
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex141.rq
+---------------------
+| mealCode | amount |
+=====================
+| "BRE"    | 6.53   |
+| "BRE"    | 6.65   |
+| "BRE"    | 4.32   |
+| "DIN"    | 28.30  |
+| "DIN"    | 31.45  |
+| "DIN"    | 25.05  |
+| "LUN"    | 10.00  |
+| "LUN"    | 9.45   |
+| "LUN"    | 11.13  |
+---------------------
+
+ex143.rq (moving select criteria within where clause as we did in sub queries)
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex143.rq
+---------------------
+| mealCode | amount |
+=====================
+| "BRE"    | 6.53   |
+| "BRE"    | 6.65   |
+| "BRE"    | 4.32   |
+| "DIN"    | 28.30  |
+| "DIN"    | 31.45  |
+| "DIN"    | 25.05  |
+
+ex144.rq
+(using BIND within the where clause)
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex145.ttl --query c:/sparql/sparqllearning/ex144.rq
+---------------------
+| mealCode | amount |
+=====================
+| "BRE"    | 6.53   |
+| "BRE"    | 6.65   |
+| "BRE"    | 4.32   |
+| "DIN"    | 28.30  |
+
+===============================
+Example 15:
+Understanding Blank Nodes (grouping data [moving triples that are related together] and that having a pointer to that data)
+refer: ex040.ttl & ex041.rq
+========================
+Example 16:
+Accessing dataset remotely or from local machine by editing FROM...
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex041.ttl --query c:/sparql/sparqllearning/ex088.rq
+-------------------------------------------------------------------------------------
+| firstName | lastName | streetAddress | city          | region        | postalCode |
+=====================================================================================
+| "Richard" | "Mutt"   | "32 Main St." | "Springfield" | "Connecticut" | "49345"    |
+-------------------------------------------------------------------------------------
+
+===================
+Example 16:
+Querying sparkql end point, by placing sparql endpoint inside WHERE 
+refer: ex167.rq
+C:\apache-jena-3.13.0\bat>arq.bat --data c:/sparql/sparqllearning/ex041.ttl --query c:/sparql/sparqllearning/ex167.rq
+
+Note** use LIMIT here to limit the results
+===========================
+
+Example 17: Named Graphs
+ex122.ttl,ex069.ttl & ex123.rq
+
+provenance:
+ex126.rq 
+From refers via Named , and use Graph within where
+===================================
+
+
+
+===========================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
