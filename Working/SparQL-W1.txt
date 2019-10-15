@@ -1,0 +1,86 @@
+SparQL
+----------
+Resource description format (RDF) : Its a data model. Can be represented in different formats (such as turtle format)
+Everything can be described as triple.
+Subject(resource identifier): resource we are trying to describe
+Predicate(property name) : property of that resource
+Object (property value) : value of that property.
+
+==========================
+Working options:
+
+ARQ
+Running Query using ARQ (ARQ [query engine]A sparql processor for Jena)
+
+Apache Jena Fuseki Server
+
+
+
+
+
+=======================================
+Example1:
+C:\apache-jena-3.13.0\bat>arq.bat --data C:\SparkQL\ex002.ttl --query C:\SparkQL\ex003.rq
+
+Example2:
+C:\apache-jena-3.13.0\bat>arq.bat --data C:\SparkQL\ex002.ttl --query C:\SparkQL\ex004.rq
+
+============================
+Using fuseki Server
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --help
+fuseki [--config=FILE] [--mem|--desc=AssemblerFile|--file=FILE] [--port PORT] /DatasetPathName
+  Fuseki
+      --desc=                Assembler description file
+      --mem                  Create an in-memory, non-persistent dataset for the server
+      --file=FILE            Create an in-memory, non-persistent dataset for the server, initialised with the contents of the file
+      --tdb2                 Use TDB2 for command line persistent datasets (default is TDB1)
+      --loc=DIR              Use an existing TDB database (or create if does not exist)
+      --memTDB               Create an in-memory, non-persistent dataset using TDB (testing only)
+      --port                 Listen on this port number
+      --localhost            Listen only on the localhost interface
+      --timeout=             Global timeout applied to queries (value in ms) -- format is X[,Y]
+      --update               Allow updates (via SPARQL Update and SPARQL HTTP Update)
+      --config=              Use a configuration file to determine the services
+      --jetty-config=FILE    Set up the server (not services) with a Jetty XML file
+      --gzip=on|off          Enable GZip compression (HTTP Accept-Encoding) if request header set
+  Symbol definition
+      --set                  Set a configuration symbol to a value
+  General
+      -v   --verbose         Verbose
+      -q   --quiet           Run with minimal output
+      --debug                Output information for debugging
+      --help
+      --version              Version information
+      --strict               Operate in strict SPARQL mode (no extensions of any kind)
+
+Starting server
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --update --mem /:ds
+[2019-10-13 08:42:26] Server     INFO  Dataset: in-memory
+[2019-10-13 08:42:26] Server     INFO  Apache Jena Fuseki 3.13.0
+[2019-10-13 08:42:27] Config     INFO  FUSEKI_HOME=C:\apache-jena-fuseki-3.13.0\.
+[2019-10-13 08:42:27] Config     INFO  FUSEKI_BASE=C:\apache-jena-fuseki-3.13.0\run
+[2019-10-13 08:42:27] Config     INFO  Shiro file: file://C:\apache-jena-fuseki-3.13.0\run\shiro.ini
+[2019-10-13 08:42:29] Config     INFO  Template file: templates/config-mem
+[2019-10-13 08:42:29] Config     INFO  Register: /:ds
+[2019-10-13 08:42:29] Server     INFO  Started 2019/10/13 08:42:29 CEST on port 3030
+
+C:\apache-jena-fuseki-3.13.0>fuseki-server.bat --update -v --mem /:ds
+[2019-10-13 08:43:33] Server     INFO  Dataset: in-memory
+[2019-10-13 08:43:33] Server     INFO  Apache Jena Fuseki 3.13.0
+[2019-10-13 08:43:33] Config     INFO  FUSEKI_HOME=C:\apache-jena-fuseki-3.13.0\.
+[2019-10-13 08:43:33] Config     INFO  FUSEKI_BASE=C:\apache-jena-fuseki-3.13.0\run
+[2019-10-13 08:43:33] Config     INFO  Shiro file: file://C:\apache-jena-fuseki-3.13.0\run\shiro.ini
+[2019-10-13 08:43:33] Config     INFO  Template file: templates/config-mem
+[2019-10-13 08:43:34] Config     INFO  Register: /:ds
+[2019-10-13 08:43:34] Server     INFO  Apache Jena Fuseki
+[2019-10-13 08:43:34] Server     INFO  Dataset Type = in-memory
+[2019-10-13 08:43:34] Server     INFO  Path = /:ds; Services = [data, quads, query, sparql, get, update, quads, upload]
+[2019-10-13 08:43:34] Server     INFO    Fuseki: 3.13.0
+[2019-10-13 08:43:34] Server     INFO    Java:   1.8.0_221
+[2019-10-13 08:43:34] Server     INFO    Memory: max=1.0 GiB
+[2019-10-13 08:43:34] Server     INFO    OS:     Windows 10 10.0 amd64
+[2019-10-13 08:43:34] Server     INFO  Started 2019/10/13 08:43:34 CEST on port 3030
+
+Access Browser: http://localhost:3030
+upload dataset (i.e. ttl file)> type/paste your query > choose format > run query
+

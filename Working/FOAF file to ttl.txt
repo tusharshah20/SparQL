@@ -1,0 +1,26 @@
+Setup java project for Jena
+https://jena.apache.org/tutorials/using_jena_with_eclipse.html
+https://jena.apache.org/getting_involved/index.html
+
+Now to create an RDF data file using the FOAF (friend of a friend) ontology language
+
+Access onotlogy at 
+xmlns.com/foaf/spec
+or look under
+xmlns.com/foaf/spec/#term_Person
+
+It allows us to describe sematically the people [look under FOAF core]
+and look under Class:foaf:Person
+
+to create a foaf file we will use
+www.ldodds.com/foaf/foaf-a-matic.html
+
+fill the forms
+Generate results > FOAF me!
+---save the RDF file...
+
+use the code to work on this RDF file and convert to ttl
+
+Also check dbpedia.org
+And https://query.wikidata.org/
+

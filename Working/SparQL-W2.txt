@@ -531,10 +531,33 @@ provenance:
 ex126.rq 
 From refers via Named , and use Graph within where
 ===================================
+Example 18:
+#Create a graph 
+PREFIX : <http://bedrock/>
+insert data {
+  :fred :hasSpouse :wilma .
+  :fred :hasChild :pebbles .
+  :wilma :hasChild :pebles .
+  :pebbles :hasSpouse :bamm-bamm ;
+    :hasChild :roxy,:chip . }
+
+#Run a query to test your graph
+
+PREFIX : <http://bedrock>
+select ?s  ?p ?o
+where {
+  ?s ?p ?o}
+
+PREFIX : <http://bedrock>
+ask
+where {
+  :fred :hasChild ?child .
+  ?child :hasChild ?grandChild .
+}
+============================================
 
 
 
-===========================
 
 
 

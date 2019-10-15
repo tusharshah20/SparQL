@@ -1,0 +1,13 @@
+Use GraphDB (workbench) > OntoRefine (to convert data into RDF format)
+
+<sparql> option which shows query :
+PREFIX rdf <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT * from WHERE {
+   ?sub ?pred ?obj .
+  }
+LIMIT 10
+
+The above should convert tabular/csv data into RDF format.
+
+Then You can use ontology to convert RDF into Turtle format 
